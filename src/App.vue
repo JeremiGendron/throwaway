@@ -6,10 +6,9 @@
     <span v-if="room" @click="closeRoom"
       :style="{
         position: 'fixed',
-        top: '20px',
-        right: '20px',
+        top: '1vh',
+        right: '2vw',
         fontSize: '3vh',
-        padding: '1vh'
       }"
     >X</span>
   </div>
@@ -38,12 +37,6 @@ export default {
     const socket = new WebSocket('wss://9ruk5o8rc2.execute-api.us-east-1.amazonaws.com/test')
     socket.onmessage = this.handleMessage
     this.$store.commit('socket', socket)
-    setTimeout(() => {
-      socket.send(JSON.stringify({
-        action: 'createroom',
-        reqid: Math.random().toString()
-      }))
-    }, 5000)
   },
 
   methods: {
@@ -51,21 +44,19 @@ export default {
       this.$store.commit('orientation', window.innerHeight > window.innerWidth)
     },
     handleMessage (event) {
-      //translate apigateway responses to json
       const { action, reqid, result } = JSON.parse(event.data)
       if (action === 'createroom') this.createroom({ reqid, result })
       else if (action === 'joinroom') this.joinroom({ reqid })
       else if (action === 'sendmessage') this.sendmessage({ reqid, result })
     },
     createroom (data) {
-      console.log(data)
       this.$store.commit('createroom', data)
     },
     joinroom (data) {
       this.$store.commit('joinroom', data)
     },
     sendmessage (data) {
-      console.log(data)
+      console.log('message received')
       this.$store.commit('sendmessage', data)
     },
     closeRoom () {
