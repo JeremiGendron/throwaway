@@ -55,7 +55,7 @@
           placeholder="7cf26f0c-0460-4980-a3df-317bdd910b4e"
           autocomplete="off"
         />
-        <div id="input-submit" @click="sendJoin" style="cursor: pointer"><span>Join</span></div>
+        <div id="input-submit" @click="sendJoin" style="cursor: pointer; padding: 1vh 2vh">Join</div>
       </div>
     </div>
   </div>
