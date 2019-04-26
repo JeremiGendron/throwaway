@@ -52,7 +52,7 @@
           }"
           @keyup="validateInput"
           v-model="inputModel"
-          placeholder="Enter room id"
+          placeholder="7cf26f0c-0460-4980-a3df-317bdd910b4e"
           autocomplete="off"
         />
         <div id="input-submit" @click="sendJoin" style="cursor: pointer"><span>Join</span></div>
@@ -193,6 +193,10 @@ export default {
       return this.$store.getters['socket']
     },
 
+    room () {
+      return this.$store.getters['room']
+    },
+
     actionBarStyle () {
       return this.orientation
         ? {
@@ -269,6 +273,12 @@ export default {
   },
 
   watch: {
+    room (val) {
+      if (val === this.inputModel) {
+        this.openRoom(val)
+        this.closeDialog()
+      }
+    },
     newroom (val) {
       if (val[0] === this.waitingFor) {
         this.waitingFor = ''

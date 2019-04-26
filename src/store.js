@@ -28,7 +28,10 @@ export default new Vuex.Store({
       state.newroom = [reqid, result]
       state.rooms = [...state.rooms, result]
     },
-    joinroom: (state, { reqid }) => state.rooms = [...state.rooms, reqid],
+    joinroom: (state, { reqid }) => {
+      state.rooms = [...state.rooms, reqid]
+      state.room = reqid
+    },
     openRoom: (state, room) => state.room = room,
     closeRoom: (state, room) => {
       const index = state.rooms.findIndex((val) => val === room)
@@ -37,6 +40,8 @@ export default new Vuex.Store({
       state.room = null
     },
     sendmessage: (state, { reqid, result }) => {
+      console.log(reqid, result)
+      console.log(state.messages)
       if (!state.messages[reqid]) Vue.set(state.messages, reqid, [result])
       else state.messages[reqid] = Vue.set(state.messages, reqid, [...state.messages[reqid], result])
     }

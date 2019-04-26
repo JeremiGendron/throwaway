@@ -14,7 +14,7 @@
       <span
         class="selector"
         :style="{
-          fontSize: '2vh',
+          fontSize: '1.5vh',
           borderBottom: '1px solid #2c3e50',
           lineHeight: '1.15'
         }"
@@ -42,14 +42,21 @@
       <div class="chat-message"
         v-for="(message, index) in messages"
         :key="index"
+        :style="{
+          fontSize: '2vh',
+          margin: '1vh',
+          marginTop: index === 0 ? '2vh' : '',
+          textAlign: 'center'
+        }"
       >
-
+        <span>{{message}}</span>
       </div>
     </div>
     <div id="chat-input"
       :style="inputStyle"
     >
       <textarea
+        v-if="room"
         :style="{
           width: '90%',
           height: '100%',
@@ -61,6 +68,7 @@
         v-model="textarea"
       ></textarea>
       <div id="chat-submit"
+        v-if="room"
         :style="{
           width: '10%',
           height: '100%',
@@ -137,6 +145,7 @@ export default {
     submit () {
       this.socket.send(JSON.stringify({
         room: this.room,
+        action: 'sendmessage',
         message: this.textarea.length > 282 ? this.textarea.substr(0, 282) : this.textarea
       }))
       this.textarea = ''
@@ -151,6 +160,13 @@ export default {
   created () {},
 
   mounted () {
+  },
+
+  watch: {
+    messages () {
+      const div = document.getElementById('chat-messages')
+      div.scrollTop = div.scrollHeight
+    }
   },
 
   computed: {
