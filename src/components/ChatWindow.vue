@@ -14,7 +14,7 @@
       <span
         class="selector"
         :style="{
-          fontSize: '1.5vh',
+          fontSize: '2vh',
           borderBottom: '1px solid #2c3e50',
           lineHeight: '1.15'
         }"
@@ -151,7 +151,7 @@ export default {
       this.textarea = ''
     },
     copy (room) {
-      this.$copyText(room).then((e) => {
+      this.$copyText(room).then(() => {
         alert('Copied.')
       })
     }

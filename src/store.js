@@ -34,6 +34,7 @@ export default new Vuex.Store({
       state.rooms = [...state.rooms, result]
     },
     joinroom: (state, { reqid }) => {
+      if (state.rooms.includes(reqid)) return
       state.rooms = [...state.rooms, reqid]
       state.room = reqid
     },
